@@ -41,7 +41,6 @@
 </template>
 
 <script>
-  import HelloWorld from './components/HelloWorld.vue'
 
   export default {
     name: 'app',
@@ -153,10 +152,6 @@
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /*min-height: 100vh;*/
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*width: 100%;*/
   }
   .main-content-wrapper {
 

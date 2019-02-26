@@ -1,14 +1,10 @@
 <template>
   <div class="date-picker">
     <div class="calendar">
-      <!--<div class="header__pre" @click="handlePreMonth">-->
-      <!--</div>-->
       <div class="header-title">
         <span>{{selectedYear}}-{{selectedMonth + 1}}-{{selectedDate ? selectedDate.split('/')[2]: new Date().getDate()}}</span>
         <span class="today" @click="goToToday">今天</span>
       </div>
-      <!--<div class="header__next" @click="handleNextMonth">-->
-      <!--</div>-->
       <div class="calendar-main" @touchstart="start" @touchend="end">
         <div class="main-block-head-wrapper">
           <div class="main-block-head" v-for="(item, index) in calendarHeader" :key="index">
