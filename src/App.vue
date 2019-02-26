@@ -1,41 +1,41 @@
 <template>
   <div id="app" @touchstart="start" @touchend="end">
-    <div class="date-wrapper">
-      <div class="date-pick">
-        <date ref="datePicker" :moveDown="moveDown" @changeSelected="changeSelectedIndex"></date>
-      </div>
-      <div class="arrow">
-        <svg class="icon" aria-hidden="true">
-          <use xlink:href="#icon-arrow"></use>
-        </svg>
-      </div>
-      <ul class="setting-wrapper">
-        <li class="setting"
-            v-for="(item, index) in actions" :key="index"
-            :class="{'active': index === currentIndex}"
-            @click="changeAction(index)">{{item}}
-        </li>
-      </ul>
-    </div>
-    <ul class="main-content">
-      <li class="item" v-for="(list, index) in lists" :key="index">
-        <div class="item-head">
-          <div class="item-title">{{list.title}}</div>
-          <div class="item-time">16:24</div>
-        </div>
-        <div class="item-content">
-          {{list.content}}
-        </div>
-        <div class="item-people">
-          <div class="people-name" :class="{'trans': list.people === '经办人'}">我的角色: <span>{{list.people}}</span></div>
-          <div class="actions">
+    <div class="main-content-wrapper">
+      <div class="date-wrapper">
+        <date ref="datePicker" :moveDown="moveDown" @changeSelected="changeSelectedIndex" class="xxx"></date>
+          <div class="arrow" @click="clickDown" :class="{'active': !moveDown}">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-more"></use>
+              <use xlink:href="#icon-arrow"></use>
             </svg>
           </div>
-        </div>
-      </li>
-    </ul>
+          <ul class="setting-wrapper">
+            <li class="setting"
+                v-for="(item, index) in actions" :key="index"
+                :class="{'active': index === currentIndex}"
+                @click="changeAction(index)">{{item}}
+            </li>
+          </ul>
+          <ul class="main-content">
+            <li class="item" v-for="(list, index) in lists" :key="index">
+              <div class="item-head">
+                <div class="item-title">{{list.title}}</div>
+                <div class="item-time">16:24</div>
+              </div>
+              <div class="item-content">
+                {{list.content}}
+              </div>
+              <div class="item-people">
+                <div class="people-name" :class="{'trans': list.people === '经办人'}">我的角色: <span>{{list.people}}</span></div>
+                <div class="actions">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-more"></use>
+                  </svg>
+                </div>
+              </div>
+            </li>
+          </ul>
+      </div>
+    </div>
     <tab></tab>
   </div>
 </template>
@@ -52,6 +52,9 @@
           {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
           {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
           {title: '227市场', content: '定价依据和客户判定', people: '经办人'},
+          {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
+          {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
+          {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
           {title: '227市场', content: '定价依据和客户判定', people: '交办人'},
         ],
         actions: [
@@ -83,6 +86,24 @@
       },
       changeSelectedIndex(index){
         this.moveIndex = index
+      },
+      clickDown(e){
+        let vm = this.$refs.datePicker
+        if(e.currentTarget.classList.contains('active')){
+          this.moveDown = true
+          if(this.moveIndex){
+            let year = vm.selectedYear
+            let month = vm.selectedMonth +1
+            let selectedYear = parseInt(vm.selectedDate.split('/')[0],10)
+            let selectedMonth = parseInt(vm.selectedDate.split('/')[1],10)
+            if(year === selectedYear && month === selectedMonth){
+              vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(-${this.moveIndex*336}px)`
+            }
+          }
+        }else{
+          vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(0px)`
+          this.moveDown = false
+        }
       },
       end(e) {
         let vm = this.$refs.datePicker
@@ -133,13 +154,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     /*min-height: 100vh;*/
-    position: fixed;
-    top: 0;
-    width: 100%;
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*width: 100%;*/
   }
-  .date-pick{
-    /*overflow: hidden;*/
-    /*height: px(128);*/
+  .main-content-wrapper {
 
   }
   .date-wrapper {
@@ -155,6 +174,11 @@
         width: px(12);
         transform: rotate(90deg);
         fill: $color-blue;
+      }
+      &.active{
+        .icon{
+          transform: rotate(-90deg);
+        }
       }
     }
 
@@ -202,7 +226,8 @@
   .main-content {
     margin-top: px(42);
     padding-bottom: px(52);
-
+    overflow: auto;
+    height: 100%;
     .item {
       padding: px(12) px(20);
       border-bottom: 1px solid #f2f2f2;

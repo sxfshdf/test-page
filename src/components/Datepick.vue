@@ -112,21 +112,21 @@
       end(e){
         let x2 = e.changedTouches[0].clientX
         let vm = this.$el.querySelector('.main-block-wrapper')
-
+        let {width} = this.$el.querySelector('.main-block').getBoundingClientRect()
+        let n = this.daysInMonth.length
+        let length = n/7
         if (x2 - this.moveX >= 40){
           // 右滑
           if(vm.classList.contains('close')){
-            let n = this.daysInMonth.length
-            let xxx = n/7
             if(this.moveIndex){
               if(this.moveIndex > 0 ){
                 this.moveIndex -= 1
-                vm.style.transform = `translateX(${-(this.moveIndex)*336}px)`
+                vm.style.transform = `translateX(${-(this.moveIndex)*width*7}px)`
               }
             }else{
               this.preMonth()
               this.moveIndex = this.daysInMonth.length/7 - 1
-              vm.style.transform = `translateX(${-(this.moveIndex)*336}px)`
+              vm.style.transform = `translateX(${-(this.moveIndex)*width*7}px)`
             }
           }else{
             this.preMonth()
@@ -134,22 +134,20 @@
         } else if(this.moveX - x2 >=40){
           // 左滑
           if(vm.classList.contains('close')){
-            let n = this.daysInMonth.length
-            let xxx = n/7
             if(this.moveIndex){
               this.moveIndex += 1
-              if(this.moveIndex > 0 && this.moveIndex < xxx){
-                vm.style.transform = `translateX(${-(this.moveIndex)*336}px)`
-              } else if(this.moveIndex === xxx){
+              if(this.moveIndex > 0 && this.moveIndex < length){
+                vm.style.transform = `translateX(${-(this.moveIndex)*width*7}px)`
+              } else if(this.moveIndex === length){
                 this.nextMonth()
                 vm.style.transform = `translateX(0px)`
                 this.moveIndex = 0
               }
             } else {
               this.moveIndex += 1
-              if(this.moveIndex > 0 && this.moveIndex < xxx){
-                vm.style.transform = `translateX(${-(this.moveIndex)*336}px)`
-              } else if(this.moveIndex === xxx){
+              if(this.moveIndex > 0 && this.moveIndex < length){
+                vm.style.transform = `translateX(${-(this.moveIndex)*width*7}px)`
+              } else if(this.moveIndex === length){
                 this.nextMonth()
                 vm.style.transform = `translateX(0px)`
                 this.moveIndex = 0
