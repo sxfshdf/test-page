@@ -88,6 +88,8 @@
       },
       clickDown(e){
         let vm = this.$refs.datePicker
+        let block = vm.$el.querySelector('.main-block')
+        let {width} = block.getBoundingClientRect()
         if(e.currentTarget.classList.contains('active')){
           this.moveDown = true
           if(this.moveIndex){
@@ -96,7 +98,7 @@
             let selectedYear = parseInt(vm.selectedDate.split('/')[0],10)
             let selectedMonth = parseInt(vm.selectedDate.split('/')[1],10)
             if(year === selectedYear && month === selectedMonth){
-              vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(-${this.moveIndex*336}px)`
+              vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(-${this.moveIndex*width*7}px)`
             }
           }
         }else{
@@ -120,7 +122,7 @@
             let selectedYear = parseInt(vm.selectedDate.split('/')[0],10)
             let selectedMonth = parseInt(vm.selectedDate.split('/')[1],10)
             if(year === selectedYear && month === selectedMonth){
-              vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(-${this.moveIndex*336}px)`
+              vm.$el.querySelector('.main-block-wrapper').style.transform = `translateX(-${this.moveIndex*width*7}px)`
             }
           }
         }

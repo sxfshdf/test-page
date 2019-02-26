@@ -184,8 +184,10 @@
         let date = new Date().getDate()
         this.setMoveIndex(date)
         let vm = this.$el.querySelector('.main-block-wrapper')
+        let block = this.$el.querySelector('.main-block')
+        let { width } = block.getBoundingClientRect()
         if(vm.classList.contains('close')){
-          vm.style.transform = `translateX(${-(this.moveIndex)*336}px)`
+          vm.style.transform = `translateX(${-(this.moveIndex)*width*7}px)`
         }
       }
     },
